@@ -14,19 +14,23 @@ try {
 try {
     $contents = file_get_contents("php://input");
     $request = json_decode($contents);
-    $api = $request->api;
-    $action = $request->action;
-    $data = $request->data;
+    if ($request) {
+        $api = $request->api;
+        $action = $request->action;
+        $data = $request->data;
+    }
+
 } catch (Exception $e) {
     getFalseResponse($e);
 }
 
 try {
-    $apiFactory = new APIFactory();
-    $api = $apiFactory->getAPI($api);
-    $api->setDatabaseConnection($connection);;
-
-    return json_encode($api->execute($action, $data));
+    if ($request) {
+        $apiFactory = new APIFactory();
+        $api = $apiFactory->getAPI($api);
+        $api->setDatabaseConnection($connection);;
+        return json_encode($api->execute($action, $data));
+    }
 } catch (Exception $e) {
     getFalseResponse($e);
 }
