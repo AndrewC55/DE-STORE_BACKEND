@@ -1,5 +1,8 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+
 include 'API/APIInterface.php';
 include 'API/APIFactory.php';
 
@@ -35,10 +38,12 @@ try {
     getFalseResponse($e);
 }
 
-function getFalseResponse(Exception $e): array
+function getFalseResponse(Exception $e): string
 {
-    return [
+    $falseResponse =  [
         'success' => false,
         'data' => $e->getMessage()
     ];
+
+    return json_encode($falseResponse);
 }
