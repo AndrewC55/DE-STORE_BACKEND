@@ -3,8 +3,8 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
-include 'API/APIInterface.php';
-include 'API/APIFactory.php';
+include_once 'API/API.php';
+include_once 'API/APIFactory.php';
 
 try {
     $connection = new mysqli('mysql_db', 'root', 'root', 'DE_STORE');
