@@ -23,7 +23,7 @@ CREATE TABLE `inventory` (
     productID INT(11) NOT NULL,
     stock INT(11) NOT NULL,
     PRIMARY KEY (inventoryID),
-    FOREIGN KEY (productID)
+    FOREIGN KEY (productID) REFERENCES products(productID)
 );
 
 INSERT INTO `inventory` (`productID`, `stock`) VALUES
@@ -41,8 +41,7 @@ CREATE TABLE `customers` (
     address VARCHAR(255) NOT NULL,
     loyaltyCard INT(1),
     finance INT(1),
-    PRIMARY KEY (customerID),
-    FOREIGN KEY (email)
+    PRIMARY KEY (customerID)
 );
 
 INSERT INTO `customers` (`firstName`, `lastName`, `email`, `address`, `loyaltyCard`, `finance`) VALUES
@@ -56,8 +55,8 @@ CREATE TABLE `sales` (
     customerID INT(11),
     price INT (11),
     PRIMARY KEY (salesID),
-    FOREIGN KEY (productID),
-    FOREIGN KEY (customerID)
+    FOREIGN KEY (productID) REFERENCES  products(productID),
+    FOREIGN KEY (customerID) REFERENCES customers(customerID)
 );
 
 INSERT INTO `sales` (`productID`, `customerID`, `price`) VALUES
