@@ -5,7 +5,7 @@ include 'Enums/ActionEnum.php';
 class ReportsAPI implements APIInterface {
 
     /** SQL queries to fetch, and insert from database */
-    private const INSERT_SALE_SQL = "INSERT INTO `sales` (`user`, `address`, `productID`, `price`) VALUES ('%s', '%s', %d, '%s')";
+    private const INSERT_SALE_SQL = "INSERT INTO `sales` (`productID`, `user`, `address`, `price`) VALUES (%d, '%s', '%s', '%s')";
     private const GET_ALL_SALES_SQL = "SELECT * FROM `sales`";
 
     /** Success message to be sent back */
