@@ -2,6 +2,12 @@
 
 abstract class API {
 
+    protected const INSERT = 'insert';
+    protected const REMOVE = 'remove';
+    protected const UPDATE = 'update';
+    protected const GET = 'get';
+    protected const ACTION_NOT_EXIST = "Action not found";
+
     /** Database connection */
     private mysqli $database;
 

@@ -13,12 +13,12 @@ class ReportsAPI extends API {
     public function execute(string $action, object $data): array
     {
         switch ($action) {
-            case ActionEnum::INSERT:
+            case self::INSERT:
                 return self::insertSale($data);
-            case ActionEnum::GET:
+            case self::GET:
                 return self::getAllSales();
             default:
-                throw new Exception(ActionEnum::ACTION_NOT_EXIST);
+                throw new Exception(self::ACTION_NOT_EXIST);
         }
     }
 

@@ -17,16 +17,16 @@ class InventoryAPI extends API {
     public function execute(string $action, object $data): array
     {
         switch ($action) {
-            case 'insert':
+            case self::INSERT:
                 return self::insertInventory($data);
-            case 'remove':
+            case self::REMOVE:
                 return self::removeInventory($data);
-            case 'update':
+            case self::UPDATE:
                 return self::updateInventory($data);
-            case 'get':
+            case self::GET:
                 return self::getAllInventory();
             default:
-                throw new Exception(ActionEnum::ACTION_NOT_EXIST);
+                throw new Exception(self::ACTION_NOT_EXIST);
         }
     }
 

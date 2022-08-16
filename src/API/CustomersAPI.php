@@ -17,16 +17,16 @@ class CustomersAPI extends API {
     public function execute(string $action, object $data): array
     {
         switch ($action) {
-            case 'insert':
+            case self::INSERT:
                 return self::insertCustomer($data);
-            case 'remove':
+            case self::REMOVE:
                 return self::removeCustomer($data);
-            case 'update':
+            case self::UPDATE:
                 return self::updateCustomer($data);
-            case 'get':
+            case self::GET:
                 return self::getAllCustomers();
             default:
-                throw new Exception(ActionEnum::ACTION_NOT_EXIST);
+                throw new Exception(self::ACTION_NOT_EXIST);
         }
     }
 

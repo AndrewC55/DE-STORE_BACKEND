@@ -17,16 +17,16 @@ class PriceControlAPI extends API {
     public function execute(string $action, object $data): array
     {
         switch ($action) {
-            case 'insert':
+            case self::INSERT:
                 return self::insertProduct($data);
-            case 'remove':
+            case self::REMOVE:
                 return self::removeProduct($data);
-            case 'update':
+            case self::UPDATE:
                 return self::updateProduct($data);
-            case 'get':
+            case self::GET:
                 return self::getAllProducts();
             default:
-                throw new Exception(ActionEnum::ACTION_NOT_EXIST);
+                throw new Exception(self::ACTION_NOT_EXIST);
         }
     }
 
