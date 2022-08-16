@@ -1,6 +1,6 @@
 <?php
 
-include "ProductAPI.php";
+include 'Enums/APIEnum.php';
 
 class APIFactory {
 
@@ -12,16 +12,16 @@ class APIFactory {
     public function getAPI(string $api): APIInterface
     {
         switch($api) {
-            case 'products':
-                return new ProductAPI();
-            case 'users':
+            case APIEnum::PRICE_CONTROL:
+                return new PriceControlAPI();
+            case APIEnum::INVENTORY:
                 return new UserAPI();
-            case 'sales':
+            case APIEnum::CUSTOMERS:
                 return new SalesAPI();
-            case 'offers':
+            case APIEnum::REPORTS:
                 return new OffersAPI();
             default:
-                throw new Exception("API unavailable at this time");
+                throw new Exception(APIEnum::API_NOT_FOUND);
         }
     }
 }

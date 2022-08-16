@@ -32,18 +32,18 @@ try {
         $apiFactory = new APIFactory();
         $api = $apiFactory->getAPI($api);
         $api->setDatabaseConnection($connection);;
-        return json_encode($api->execute($action, $data));
+        echo json_encode($api->execute($action, $data));
     }
 } catch (Exception $e) {
     getFalseResponse($e);
 }
 
-function getFalseResponse(Exception $e): string
+function getFalseResponse(Exception $e): void
 {
     $falseResponse =  [
         'success' => false,
         'data' => $e->getMessage()
     ];
 
-    return json_encode($falseResponse);
+    echo json_encode($falseResponse);
 }

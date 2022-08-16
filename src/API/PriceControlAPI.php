@@ -2,7 +2,7 @@
 
 include 'Enums/ActionEnum.php';
 
-class ProductAPI implements APIInterface {
+class PriceControlAPI implements APIInterface {
 
     /** SQL queries to fetch, insert, update, and delete data from database */
     private const INSERT_PRODUCT_SQL = "INSERT INTO `products` (`productName`, `price`, `stock`, `delivery`) VALUES ('%s', '%s', %d, '%s')";
@@ -125,17 +125,6 @@ class ProductAPI implements APIInterface {
 
             $success = true;
             $data = $products;
-
-            /*foreach ($products as $array) {
-                if (is_array($array)) {
-                    echo "NEW PRODUCT \n";
-                    foreach ($array as $key => $value) {
-                        echo $key . " => " . $value . "\n";
-                    }
-                } else {
-                    echo $array;
-                }
-            }*/
         } catch (Exception $e) {
             $success = false;
             $data = $e->getMessage();
