@@ -5,7 +5,7 @@ include 'Enums/ActionEnum.php';
 class CustomersAPI implements APIInterface {
 
     /** SQL queries to fetch, insert, update, and delete data from database */
-    private const INSERT_CUSTOMER_SQL = "INSERT INTO `customers` (`firstName`, `lastName`, `email`, `address`, `loyaltyCard`, `finance`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')";
+    private const INSERT_CUSTOMER_SQL = "INSERT INTO `customers` (`firstName`, `lastName`, `email`, `address`, `loyaltyCard`, `finance`) VALUES ('%s', '%s', '%s', '%s', %d, '%s')";
     private const UPDATE_CUSTOMER_SQL = "UPDATE `customers` SET `%s` WHERE `customerID` = %d";
     private const REMOVE_CUSTOMER_SQL = "DELETE FROM `customers` WHERE `customerID` = %d";
     private const GET_ALL_CUSTOMER_SQL = "SELECT * FROM `customers`";

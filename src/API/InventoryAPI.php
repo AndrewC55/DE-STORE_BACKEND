@@ -5,10 +5,10 @@ include 'Enums/ActionEnum.php';
 class InventoryAPI implements APIInterface {
 
     /** SQL queries to fetch, insert, update, and delete data from database */
-    private const INSERT_INVENTORY_SQL = "INSERT INTO `inventory` (`productID`, `productName`, `stock`) VALUES ('%s', '%s', %d)";
+    private const INSERT_INVENTORY_SQL = "INSERT INTO `inventory` (`productID`, `stock`) VALUES ('%s', %d)";
     private const UPDATE_INVENTORY_SQL = "UPDATE `inventory` SET `%s` = `%s` WHERE `productID` = %d";
     private const REMOVE_INVENTORY_SQL = "DELETE FROM `inventory` WHERE `productID` = %d";
-    private const GET_ALL_INVENTORY_SQL = "SELECT * FROM `inventory`";
+    private const GET_ALL_INVENTORY_SQL = "SELECT p.name AND i.stock FROM `inventory` i JOIN `products` p ON (i.productID = p.productID)";
 
     /** Success messages to be sent back */
     private const INSERT_SUCCESS = "Inventory inserted correctly";
