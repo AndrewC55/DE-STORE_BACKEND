@@ -2,11 +2,11 @@
 
 include 'Enums/ActionEnum.php';
 
-class SalesAPI implements APIInterface {
+class ReportsAPI implements APIInterface {
 
     /** SQL queries to fetch, and insert from database */
     private const INSERT_SALE_SQL = "INSERT INTO `sales` (`user`, `address`, `productID`, `price`) VALUES ('%s', '%s', %d, '%s')";
-    private const SELECT_SALE_SQL = "SELECT * FROM `sales`";
+    private const GET_ALL_SALES_SQL = "SELECT * FROM `sales`";
 
     /** Success message to be sent back */
     private const INSERT_SUCCESS = "Sale inserted correctly";
@@ -14,6 +14,7 @@ class SalesAPI implements APIInterface {
     /** Database connection */
     private mysqli $database;
 
+    /** @throws Exception */
     public function execute(string $action, object $data): array
     {
         switch ($action) {
@@ -22,10 +23,7 @@ class SalesAPI implements APIInterface {
             case ActionEnum::GET:
                 return self::getAllSales();
             default:
-                return [
-                    'success' => false,
-                    'data' => ActionEnum::ACTION_NOT_EXIST
-                ];
+                throw new Exception(ActionEnum::ACTION_NOT_EXIST);
         }
     }
 
@@ -61,7 +59,7 @@ class SalesAPI implements APIInterface {
     private function getAllSales(): array
     {
         try {
-            $result = $this->database->query(self::SELECT_SALE_SQL);
+            $result = $this->database->query(self::GET_ALL_SALES_SQL);
             $success = true;
             $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
         } catch (Exception $e) {

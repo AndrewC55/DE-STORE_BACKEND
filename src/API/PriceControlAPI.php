@@ -5,9 +5,9 @@ include 'Enums/ActionEnum.php';
 class PriceControlAPI implements APIInterface {
 
     /** SQL queries to fetch, insert, update, and delete data from database */
-    private const INSERT_PRODUCT_SQL = "INSERT INTO `products` (`productName`, `price`, `stock`, `delivery`) VALUES ('%s', '%s', %d, '%s')";
-    private const REMOVE_PRODUCT_SQL = "DELETE FROM `products` WHERE `productID` = '%s'";
-    private const UPDATE_PRODUCT_SQL = "UPDATE `products` SET '`%s`' WHERE `productID` = '%s'";
+    private const INSERT_PRODUCT_SQL = "INSERT INTO `products` (`productName`, `price`, `delivery`, `discount`, `threeForTwo`) VALUES ('%s', %d, '%s', '%s', '%s')";
+    private const REMOVE_PRODUCT_SQL = "DELETE FROM `products` WHERE `productID` = %d";
+    private const UPDATE_PRODUCT_SQL = "UPDATE `products` SET `%s` = `%s` WHERE `productID` = %d";
     private const GET_ALL_PRODUCTS_SQL = "SELECT * FROM `products`";
 
     /** Success messages to be sent back */
@@ -18,6 +18,7 @@ class PriceControlAPI implements APIInterface {
     /** Database connection */
     private mysqli $database;
 
+    /** @throws Exception */
     public function execute(string $action, object $data): array
     {
         switch ($action) {
@@ -30,10 +31,7 @@ class PriceControlAPI implements APIInterface {
             case ActionEnum::GET:
                 return self::getAllProducts();
             default:
-                return [
-                    'success' => false,
-                    'data' => ActionEnum::ACTION_NOT_EXIST
-                ];
+                throw new Exception(ActionEnum::ACTION_NOT_EXIST);
         }
     }
 

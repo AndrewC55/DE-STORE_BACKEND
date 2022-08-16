@@ -2,38 +2,36 @@
 
 include 'Enums/ActionEnum.php';
 
-class OffersAPI implements APIInterface {
+class InventoryAPI implements APIInterface {
 
     /** SQL queries to fetch, insert, update, and delete data from database */
-    private const INSERT_OFFER_SQL = "INSERT INTO `products` (`productID`, `type`, `discount`) VALUES ('%s', '%s', '%s')";
-    private const UPDATE_OFFER_SQL = "UPDATE `products` SET `%s` WHERE `productID` = '%s'";
-    private const REMOVE_OFFER_SQL = "DELETE FROM `products` WHERE `productID` = '%s'";
-    private const GET_ALL_OFFERS_SQL = "SELECT * FROM `products`";
+    private const INSERT_INVENTORY_SQL = "INSERT INTO `inventory` (`productID`, `productName`, `stock`) VALUES ('%s', '%s', %d)";
+    private const UPDATE_INVENTORY_SQL = "UPDATE `inventory` SET `%s` = `%s` WHERE `productID` = %d";
+    private const REMOVE_INVENTORY_SQL = "DELETE FROM `inventory` WHERE `productID` = %d";
+    private const GET_ALL_INVENTORY_SQL = "SELECT * FROM `inventory`";
 
     /** Success messages to be sent back */
-    private const INSERT_SUCCESS = "Offer inserted correctly";
-    private const REMOVE_SUCCESS = "Offer removed correctly";
-    private const UPDATE_SUCCESS = "Offer updated correctly";
+    private const INSERT_SUCCESS = "Inventory inserted correctly";
+    private const REMOVE_SUCCESS = "Inventory removed correctly";
+    private const UPDATE_SUCCESS = "Inventory updated correctly";
 
     /** Database connection */
     private mysqli $database;
 
+    /** @throws Exception */
     public function execute(string $action, object $data): array
     {
         switch ($action) {
             case ActionEnum::INSERT:
-                return self::insertOffer($data);
+                return self::insertInventory($data);
             case ActionEnum::REMOVE:
-                return self::removeOffer($data);
+                return self::removeInventory($data);
             case ActionEnum::UPDATE:
-                return self::updateOffer($data);
+                return self::updateInventory($data);
             case ActionEnum::GET:
-                return self::getAllOffers();
+                return self::getAllInventory();
             default:
-                return [
-                    'success' => false,
-                    'data' => ActionEnum::ACTION_NOT_EXIST
-                ];
+                throw new Exception(ActionEnum::ACTION_NOT_EXIST);
         }
     }
 
@@ -42,10 +40,10 @@ class OffersAPI implements APIInterface {
         $this->database = $database;
     }
 
-    private function insertOffer(object $data): array
+    private function insertInventory(object $data): array
     {
         try {
-            $query = sprintf(self::INSERT_OFFER_SQL, $data->productID, $data->type, $data->discount);
+            $query = sprintf(self::INSERT_INVENTORY_SQL, $data->productID, $data->type, $data->discount);
 
             if ($this->database->query($query)) {
                 $success = true;
@@ -66,10 +64,10 @@ class OffersAPI implements APIInterface {
         ];
     }
 
-    private function removeOffer(object $data): array
+    private function removeInventory(object $data): array
     {
         try {
-            $query = sprintf(self::REMOVE_OFFER_SQL, $data->offerID);
+            $query = sprintf(self::REMOVE_INVENTORY_SQL, $data->offerID);
 
             if ($this->database->query($query)) {
                 $success = true;
@@ -90,10 +88,10 @@ class OffersAPI implements APIInterface {
         ];
     }
 
-    private function updateOffer(object $data): array
+    private function updateInventory(object $data): array
     {
         try {
-            $query = sprintf(self::UPDATE_OFFER_SQL, $data->updatedField, $data->offerID);
+            $query = sprintf(self::UPDATE_INVENTORY_SQL, $data->updatedField, $data->offerID);
 
             if ($this->database->query($query)) {
                 $success = true;
@@ -114,10 +112,10 @@ class OffersAPI implements APIInterface {
         ];
     }
 
-    private function getAllOffers(): array
+    private function getAllInventory(): array
     {
         try {
-            $result = $this->database->query(self::GET_ALL_OFFERS_SQL);
+            $result = $this->database->query(self::GET_ALL_INVENTORY_SQL);
             $success = true;
             $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
         } catch (Exception $e) {

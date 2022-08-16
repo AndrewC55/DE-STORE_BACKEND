@@ -2,37 +2,35 @@
 
 include 'Enums/ActionEnum.php';
 
-class UserAPI implements APIInterface {
+class CustomersAPI implements APIInterface {
 
     /** SQL queries to fetch, insert, update, and delete data from database */
-    private const INSERT_USER_SQL = "INSERT INTO `users` (`firstName`, `lastName`, `email`, `type`, `address`) VALUES ('%s', '%s', %d, '%s', '%s')";
-    private const UPDATE_USER_SQL = "UPDATE `users` SET `%s` WHERE `userID` = '%s'";
-    private const REMOVE_USER_SQL = "DELETE FROM `users` WHERE `userID` = '%s'";
-    private const GET_ALL_USERS_SQL = "SELECT * FROM `users`";
+    private const INSERT_CUSTOMER_SQL = "INSERT INTO `customers` (`firstName`, `lastName`, `email`, `address`, `loyaltyCard`, `finance`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')";
+    private const UPDATE_CUSTOMER_SQL = "UPDATE `customers` SET `%s` WHERE `customerID` = %d";
+    private const REMOVE_CUSTOMER_SQL = "DELETE FROM `customers` WHERE `customerID` = %d";
+    private const GET_ALL_CUSTOMER_SQL = "SELECT * FROM `customers`";
 
     /** Success messages to be sent back */
-    private const INSERT_SUCCESS = "User inserted correctly";
-    private const REMOVE_SUCCESS = "User removed correctly";
-    private const UPDATE_SUCCESS = "User updated correctly";
+    private const INSERT_SUCCESS = "Customer inserted correctly";
+    private const REMOVE_SUCCESS = "Customer removed correctly";
+    private const UPDATE_SUCCESS = "Customer updated correctly";
 
     private mysqli $database;
 
+    /** @throws Exception */
     public function execute(string $action, object $data): array
     {
         switch ($action) {
             case ActionEnum::INSERT:
-                return self::insertUser($data);
+                return self::insertCustomer($data);
             case ActionEnum::REMOVE:
-                return self::removeUser($data);
+                return self::removeCustomer($data);
             case ActionEnum::UPDATE:
-                return self::updateUser($data);
+                return self::updateCustomer($data);
             case ActionEnum::GET:
-                return self::getAllUsers();
+                return self::getAllCustomers();
             default:
-                return [
-                    'success' => false,
-                    'data' => ActionEnum::ACTION_NOT_EXIST
-                ];
+                throw new Exception(ActionEnum::ACTION_NOT_EXIST);
         }
     }
 
@@ -41,10 +39,10 @@ class UserAPI implements APIInterface {
         $this->database = $database;
     }
 
-    private function insertUser(object $data): array
+    private function insertCustomer(object $data): array
     {
         try {
-            $query = sprintf(self::INSERT_USER_SQL, $data->productName, $data->price, $data->stock, $data->delivery);
+            $query = sprintf(self::INSERT_CUSTOMER_SQL, $data->productName, $data->price, $data->stock, $data->delivery);
 
             if ($this->database->query($query)) {
                 $success = true;
@@ -65,10 +63,10 @@ class UserAPI implements APIInterface {
         ];
     }
 
-    private function removeUser(object $data): array
+    private function removeCustomer(object $data): array
     {
         try {
-            $query = sprintf(self::REMOVE_USER_SQL, $data->userID);
+            $query = sprintf(self::REMOVE_CUSTOMER_SQL, $data->userID);
 
             if ($this->database->query($query)) {
                 $success = true;
@@ -89,10 +87,10 @@ class UserAPI implements APIInterface {
         ];
     }
 
-    private function updateUser(object $data): array
+    private function updateCustomer(object $data): array
     {
         try {
-            $query = sprintf(self::UPDATE_USER_SQL, $data->updatedField, $data->userID);
+            $query = sprintf(self::UPDATE_CUSTOMER_SQL, $data->updatedField, $data->userID);
 
             if ($this->database->query($query)) {
                 $success = true;
@@ -113,10 +111,10 @@ class UserAPI implements APIInterface {
         ];
     }
 
-    private function getAllUsers(): array
+    private function getAllCustomers(): array
     {
         try {
-            $result = $this->database->query(self::GET_ALL_USERS_SQL);
+            $result = $this->database->query(self::GET_ALL_CUSTOMER_SQL);
             $success = true;
             $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
         } catch (Exception $e) {

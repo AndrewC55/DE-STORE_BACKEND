@@ -15,11 +15,11 @@ class APIFactory {
             case APIEnum::PRICE_CONTROL:
                 return new PriceControlAPI();
             case APIEnum::INVENTORY:
-                return new UserAPI();
+                return new CustomersAPI();
             case APIEnum::CUSTOMERS:
-                return new SalesAPI();
+                return new ReportsAPI();
             case APIEnum::REPORTS:
-                return new OffersAPI();
+                return new InventoryAPI();
             default:
                 throw new Exception(APIEnum::API_NOT_FOUND);
         }
