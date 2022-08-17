@@ -3,7 +3,7 @@
 class PriceControlAPI extends API {
 
     /** SQL queries to fetch, insert, update, and delete data from database */
-    private const INSERT_PRODUCT_SQL = "INSERT INTO `products` (`productName`, `price`, `delivery`, `discount`, `threeForTwo`) VALUES ('%s', %d, %d, %d, '%s')";
+    private const INSERT_PRODUCT_SQL = "INSERT INTO `products` (`productName`, `price`, `delivery`, `discount`, `threeForTwo`) VALUES ('%s', %d, %d, %d, %d)";
     private const REMOVE_PRODUCT_SQL = "DELETE FROM `products` WHERE `productID` = %d";
     private const UPDATE_PRODUCT_SQL = "UPDATE `products` SET `%s` = `%s` WHERE `productID` = %d";
     private const GET_ALL_PRODUCTS_SQL = "SELECT * FROM `products`";
@@ -32,7 +32,7 @@ class PriceControlAPI extends API {
 
     private function insertProduct(object $data): array
     {
-        $query = sprintf(self::INSERT_PRODUCT_SQL, $data->productName, $data->price, $data->stock, $data->delivery);
+        $query = sprintf(self::INSERT_PRODUCT_SQL, $data->productName, $data->price, $data->delivery, $data->discount, $data->threeForTwo);
         $message = self::INSERT_SUCCESS;
         return parent::executeQuery($query, $message);
     }

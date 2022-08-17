@@ -4,8 +4,8 @@ class CustomersAPI extends API {
 
     /** SQL queries to fetch, insert, update, and delete data from database */
     private const INSERT_CUSTOMER_SQL = "INSERT INTO `customers` (`firstName`, `lastName`, `email`, `address`, `loyaltyCard`, `finance`) VALUES ('%s', '%s', '%s', '%s', %d, '%s')";
-    private const UPDATE_CUSTOMER_SQL = "UPDATE `customers` SET `%s` WHERE `customerID` = %d";
     private const REMOVE_CUSTOMER_SQL = "DELETE FROM `customers` WHERE `customerID` = %d";
+    private const UPDATE_CUSTOMER_SQL = "UPDATE `customers` SET `%s` = `%s` WHERE `customerID` = %d";
     private const GET_ALL_CUSTOMER_SQL = "SELECT * FROM `customers`";
 
     /** Success messages to be sent back */
@@ -32,21 +32,21 @@ class CustomersAPI extends API {
 
     private function insertCustomer(object $data): array
     {
-        $query = sprintf(self::INSERT_CUSTOMER_SQL, $data->productName, $data->price, $data->stock, $data->delivery);
+        $query = sprintf(self::INSERT_CUSTOMER_SQL, $data->firstName, $data->lastName, $data->email, $data->address, $data->loyaltyCard, $data->finance);
         $message = self::INSERT_SUCCESS;
         return parent::executeQuery($query, $message);
     }
 
     private function removeCustomer(object $data): array
     {
-        $query = sprintf(self::REMOVE_CUSTOMER_SQL, $data->userID);
+        $query = sprintf(self::REMOVE_CUSTOMER_SQL, $data->customerID);
         $message = self::REMOVE_SUCCESS;
         return parent::executeQuery($query, $message);
     }
 
     private function updateCustomer(object $data): array
     {
-        $query = sprintf(self::UPDATE_CUSTOMER_SQL, $data->updatedField, $data->userID);
+        $query = sprintf(self::UPDATE_CUSTOMER_SQL, $data->updatedField, $data->customerID);
         $message = self::UPDATE_SUCCESS;
         return parent::executeQuery($query, $message);
     }
