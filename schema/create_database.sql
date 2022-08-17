@@ -22,8 +22,7 @@ CREATE TABLE `inventory` (
     inventoryID INT(11) AUTO_INCREMENT,
     productID INT(11) NOT NULL,
     stock INT(11) NOT NULL,
-    PRIMARY KEY (inventoryID),
-    FOREIGN KEY (productID) REFERENCES products(productID)
+    PRIMARY KEY (inventoryID)
 );
 
 INSERT INTO `inventory` (`productID`, `stock`) VALUES
@@ -54,9 +53,7 @@ CREATE TABLE `sales` (
     productID INT(11),
     customerID INT(11),
     price INT (11),
-    PRIMARY KEY (salesID),
-    FOREIGN KEY (productID) REFERENCES  products(productID),
-    FOREIGN KEY (customerID) REFERENCES customers(customerID)
+    PRIMARY KEY (salesID)
 );
 
 INSERT INTO `sales` (`productID`, `customerID`, `price`) VALUES
