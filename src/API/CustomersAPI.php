@@ -3,9 +3,15 @@
 class CustomersAPI extends API {
 
     /** SQL queries to fetch, insert, update, and delete data from database */
-    private const INSERT_CUSTOMER_SQL = "INSERT INTO `customers` (`firstName`, `lastName`, `email`, `address`, `loyaltyCard`, `finance`) VALUES ('%s', '%s', '%s', '%s', %d, '%s')";
+    private const INSERT_CUSTOMER_SQL = "INSERT INTO `customers` (`firstName`, `lastName`, `email`, `address`, `loyaltyCard`, `finance`) VALUES ('%s', '%s', '%s', '%s', %d, %d)";
     private const REMOVE_CUSTOMER_SQL = "DELETE FROM `customers` WHERE `customerID` = %d";
-    private const UPDATE_CUSTOMER_SQL = "UPDATE `customers` SET `%s` = `%s` WHERE `customerID` = %d";
+    private const UPDATE_CUSTOMER_SQL = "UPDATE `customers` SET 
+                       `firstName` = '%s',
+                       `lastName` = '%s',
+                       `email` = '%s',
+                       `address` = '%s',
+                       `loyaltyCard` = %d,
+                       `finance` = %d WHERE `customerID` = %d";
     private const GET_ALL_CUSTOMER_SQL = "SELECT * FROM `customers`";
 
     /** Success messages to be sent back */
@@ -46,7 +52,7 @@ class CustomersAPI extends API {
 
     private function updateCustomer(object $data): array
     {
-        $query = sprintf(self::UPDATE_CUSTOMER_SQL, $data->updatedField, $data->customerID);
+        $query = sprintf(self::UPDATE_CUSTOMER_SQL, $data->firstName, $data->lastName, $data->email, $data->address, $data->loyaltyCard, $data->finance, $data->customerID);
         $message = self::UPDATE_SUCCESS;
         return parent::executeQuery($query, $message);
     }
