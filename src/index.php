@@ -7,8 +7,10 @@ include_once 'API/API.php';
 include_once 'API/APIFactory.php';
 
 try {
+    // Create connection to DE_STORE database
     $connection = new mysqli('mysql_db', 'root', 'root', 'DE_STORE');
 } catch (Exception $e) {
+    // if database connection fails, return false result to UI
     getFalseResponse($e);
 }
 
@@ -24,6 +26,7 @@ try {
     }
 
 } catch (Exception $e) {
+    // if is invalid, return false result to UI
     getFalseResponse($e);
 }
 
@@ -35,11 +38,13 @@ try {
         echo json_encode($api->execute($action, $data));
     }
 } catch (Exception $e) {
+    // if database connection fails, return false result to UI
     getFalseResponse($e);
 }
 
 function getFalseResponse(Exception $e): void
 {
+    // return false response
     $falseResponse =  [
         'success' => false,
         'data' => $e->getMessage()

@@ -22,6 +22,7 @@ class CustomersAPI extends API {
     /** @throws Exception */
     public function execute(string $action, object $data): array
     {
+        // switch statement to call correct function based on action
         switch ($action) {
             case self::INSERT:
                 return self::insertCustomer($data);
@@ -38,6 +39,7 @@ class CustomersAPI extends API {
 
     private function insertCustomer(object $data): array
     {
+        // creates insert query and returns executeQuery function
         $query = sprintf(self::INSERT_CUSTOMER_SQL, $data->firstName, $data->lastName, $data->email, $data->address, $data->loyaltyCard, $data->finance);
         $message = self::INSERT_SUCCESS;
         return parent::executeQuery($query, $message);
@@ -45,6 +47,7 @@ class CustomersAPI extends API {
 
     private function removeCustomer(object $data): array
     {
+        // creates remove query and returns executeQuery function
         $query = sprintf(self::REMOVE_CUSTOMER_SQL, $data->customerID);
         $message = self::REMOVE_SUCCESS;
         return parent::executeQuery($query, $message);
@@ -52,6 +55,7 @@ class CustomersAPI extends API {
 
     private function updateCustomer(object $data): array
     {
+        // creates update query and returns executeQuery function
         $query = sprintf(self::UPDATE_CUSTOMER_SQL, $data->firstName, $data->lastName, $data->email, $data->address, $data->loyaltyCard, $data->finance, $data->customerID);
         $message = self::UPDATE_SUCCESS;
         return parent::executeQuery($query, $message);
@@ -59,6 +63,7 @@ class CustomersAPI extends API {
 
     private function getAllCustomers(): array
     {
+        // returns getData function in parent
         return parent::getData(self::GET_ALL_CUSTOMER_SQL);
     }
 }

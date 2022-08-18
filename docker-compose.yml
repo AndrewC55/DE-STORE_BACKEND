@@ -19,6 +19,15 @@ services:
     image: phpmyadmin:latest
     restart: always
     ports:
-      - 9001:80
+      - 9010:80
     environment:
       - PMA_ARBITRARY=1
+
+  mail:
+    image: schickling/mailcatcher:latest
+    container_name: project_mail
+    networks:
+      - default
+    environment:
+      - VIRTUAL_HOST=mail.project.docker
+      - VIRTUAL_PORT=1080

@@ -8,17 +8,18 @@ CREATE TABLE `products` (
     productName VARCHAR(255) NOT NULL,
     price INT(11) NOT NULL,
     delivery INT (11) NOT NULL,
-    discount INT(11),
+    buyOneGetOneFree INT(11),
     threeForTwo INT(11),
+    freeDelivery INT(11),
     PRIMARY KEY (productID)
 );
 
-INSERT INTO `products` (`productName`, `price`, `delivery`, `discount`, `threeForTwo`) VALUES
-('Hose', 15, 3, NULL, NULL),
-('Garden Shed', 300, 25, 50, NULL),
-('Paint brush', 10, 2, NULL, 1),
-('Large paint brush', 15, 3, NULL, NULL),
-('Lawnmower', 250, 20, 100, NULL);
+INSERT INTO `products` (`productName`, `price`, `delivery`, `buyOneGetOneFree`, `threeForTwo`, `freeDelivery`) VALUES
+('Hose', 15, 3, 0, 0, 0),
+('Garden Shed', 300, 25, 1, 0, 1),
+('Paint brush', 10, 2, 0, 1, 0),
+('Large paint brush', 15, 3, 0, 0, 1),
+('Lawnmower', 250, 20, 1, 0, 0);
 
 CREATE TABLE `inventory` (
     inventoryID INT(11) AUTO_INCREMENT,

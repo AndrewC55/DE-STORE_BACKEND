@@ -12,6 +12,7 @@ class ReportsAPI extends API {
     /** @throws Exception */
     public function execute(string $action, object $data): array
     {
+        // switch statement to call correct function based on action
         switch ($action) {
             case self::INSERT:
                 return self::insertSale($data);
@@ -24,6 +25,7 @@ class ReportsAPI extends API {
 
     private function insertSale(object $data): array
     {
+        // switch statement to call correct function based on action
         $query = sprintf(self::INSERT_SALE_SQL, $data->user, $data->address, $data->productID, $data->price);
         $message = self::INSERT_SUCCESS;
         return parent::executeQuery($query, $message);
@@ -31,6 +33,7 @@ class ReportsAPI extends API {
 
     private function getAllSales(): array
     {
+        // returns getData function in parent
         return parent::getData(self::GET_ALL_SALES_SQL);
     }
 }

@@ -15,6 +15,7 @@ class APIFactory {
      */
     public function getAPI(string $api): API
     {
+        // switch statement to return correct API based on API type
         switch($api) {
             case APIEnum::PRICE_CONTROL:
                 return new PriceControlAPI();
