@@ -14,8 +14,6 @@ try {
     getFalseResponse($e);
 }
 
-// FHfQJI28l^IHTrUXM3crV?Mw
-
 try {
     $contents = file_get_contents("php://input");
     $request = json_decode($contents);
@@ -24,7 +22,6 @@ try {
         $action = $request->action;
         $data = $request->data;
     }
-
 } catch (Exception $e) {
     // if is invalid, return false result to UI
     getFalseResponse($e);
