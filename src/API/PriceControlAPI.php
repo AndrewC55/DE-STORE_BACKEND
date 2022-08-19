@@ -38,8 +38,11 @@ class PriceControlAPI extends API {
 
     private function insertProduct(object $data): array
     {
+        $buyOneGetOneFree = $data->buyOneGetOneFree ?: null;
+        $threeForTwo = $data->threeForTwo ?: null;
+        $freeDelivery = $data->freeDelivery ?: null;
         // creates insert query and returns executeQuery function
-        $query = sprintf(self::INSERT_PRODUCT_SQL, $data->productName, $data->price, $data->delivery, $data->buyOneGetOneFree, $data->threeForTwo, $data->freeDelivery);
+        $query = sprintf(self::INSERT_PRODUCT_SQL, $data->productName, $data->price, $data->delivery, $buyOneGetOneFree, $threeForTwo, $freeDelivery);
         $message = self::INSERT_SUCCESS;
         return parent::executeQuery($query, $message);
     }
@@ -54,8 +57,11 @@ class PriceControlAPI extends API {
 
     private function updateProduct(Object $data): array
     {
+        $buyOneGetOneFree = $data->buyOneGetOneFree ?: null;
+        $threeForTwo = $data->threeForTwo ?: null;
+        $freeDelivery = $data->freeDelivery ?: null;
         // creates update query and returns executeQuery function
-        $query = sprintf(self::UPDATE_PRODUCT_SQL, $data->productName, $data->price, $data->delivery, $data->buyOneGetOneFree, $data->threeForTwo, $data->productID, $data->freeDelivery);
+        $query = sprintf(self::UPDATE_PRODUCT_SQL, $data->productName, $data->price, $data->delivery, $buyOneGetOneFree, $threeForTwo, $freeDelivery, $data->productID);
         $message = self::UPDATE_SUCCESS;
         return parent::executeQuery($query, $message);
     }

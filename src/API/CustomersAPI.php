@@ -39,8 +39,10 @@ class CustomersAPI extends API {
 
     private function insertCustomer(object $data): array
     {
+        $loyaltyCard = $data->loyaltyCard ?: null;
+        $finance = $data->finance ?: null;
         // creates insert query and returns executeQuery function
-        $query = sprintf(self::INSERT_CUSTOMER_SQL, $data->firstName, $data->lastName, $data->email, $data->address, $data->loyaltyCard, $data->finance);
+        $query = sprintf(self::INSERT_CUSTOMER_SQL, $data->firstName, $data->lastName, $data->email, $data->address, $loyaltyCard, $finance);
         $message = self::INSERT_SUCCESS;
         return parent::executeQuery($query, $message);
     }
@@ -55,8 +57,10 @@ class CustomersAPI extends API {
 
     private function updateCustomer(object $data): array
     {
+        $loyaltyCard = $data->loyaltyCard ?: null;
+        $finance = $data->finance ?: null;
         // creates update query and returns executeQuery function
-        $query = sprintf(self::UPDATE_CUSTOMER_SQL, $data->firstName, $data->lastName, $data->email, $data->address, $data->loyaltyCard, $data->finance, $data->customerID);
+        $query = sprintf(self::UPDATE_CUSTOMER_SQL, $data->firstName, $data->lastName, $data->email, $data->address, $loyaltyCard, $finance, $data->customerID);
         $message = self::UPDATE_SUCCESS;
         return parent::executeQuery($query, $message);
     }
